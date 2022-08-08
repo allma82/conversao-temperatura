@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: convertemp
+spec: 
+  replicas: 10
+  selector:
+    matchLabels:
+      app: convertemp
+  template:
+    metadata:
+      labels:
+        app: convertemp
+    spec:
+      containers:
+      - name: convertemp
+        image: allma82/conversao-temperatura:v2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: conver-temp
+spec:
+  selector:
+    app: convertemp
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30000
+  type: NodePort
